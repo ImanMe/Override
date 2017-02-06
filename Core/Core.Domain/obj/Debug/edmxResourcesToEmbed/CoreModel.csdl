@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="CityID" />
+    </Key>
+    <Property Name="CityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="StateID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="State" Relationship="Self.FK_City_State" FromRole="City" ToRole="State" />
+    <NavigationProperty Name="Locations" Relationship="Self.FK_Location_City" FromRole="City" ToRole="Location" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="CompanyID" />
+    </Key>
+    <Property Name="CompanyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DBA" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="TaxNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="EffectiveFrom" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="EffectiveTo" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="UDCs" Relationship="Self.Company_Division" FromRole="Company" ToRole="UDC" />
+    <NavigationProperty Name="Locations" Relationship="Self.Company_Location" FromRole="Company" ToRole="Location" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Locations" Relationship="Self.FK_Location_Country" FromRole="Country" ToRole="Location" />
+    <NavigationProperty Name="States" Relationship="Self.FK_State_Country" FromRole="Country" ToRole="State" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="LocationID" />
+    </Key>
+    <Property Name="LocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AddressLine1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AddressLine2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="CityID" Type="Int32" Nullable="false" />
+    <Property Name="StateID" Type="Int32" Nullable="false" />
+    <Property Name="CountryID" Type="Int32" Nullable="false" />
+    <Property Name="Zip" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UDCID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="City" Relationship="Self.FK_Location_City" FromRole="Location" ToRole="City" />
+    <NavigationProperty Name="Country" Relationship="Self.FK_Location_Country" FromRole="Location" ToRole="Country" />
+    <NavigationProperty Name="State" Relationship="Self.FK_Location_State" FromRole="Location" ToRole="State" />
+    <NavigationProperty Name="UDC" Relationship="Self.FK_Location_UDC" FromRole="Location" ToRole="UDC" />
+    <NavigationProperty Name="Companies" Relationship="Self.Company_Location" FromRole="Location" ToRole="Company" />
+    <NavigationProperty Name="People" Relationship="Self.Person_Location" FromRole="Location" ToRole="Person" />
+  </EntityType>
+  <EntityType Name="Person">
+    <Key>
+      <PropertyRef Name="PersonID" />
+    </Key>
+    <Property Name="PersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Locations" Relationship="Self.Person_Location" FromRole="Person" ToRole="Location" />
+    <NavigationProperty Name="UDCs" Relationship="Self.Person_Type" FromRole="Person" ToRole="UDC" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="StateID" />
+    </Key>
+    <Property Name="StateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CountryID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Cities" Relationship="Self.FK_City_State" FromRole="State" ToRole="City" />
+    <NavigationProperty Name="Country" Relationship="Self.FK_State_Country" FromRole="State" ToRole="Country" />
+    <NavigationProperty Name="Locations" Relationship="Self.FK_Location_State" FromRole="State" ToRole="Location" />
+  </EntityType>
+  <EntityType Name="UDC">
+    <Key>
+      <PropertyRef Name="UDCID" />
+    </Key>
+    <Property Name="UDCID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductCode" Type="Int32" Nullable="false" />
+    <Property Name="UserDefineCode" Type="Int32" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SpecialHandling" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="HardCoded" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Locations" Relationship="Self.FK_Location_UDC" FromRole="UDC" ToRole="Location" />
+    <NavigationProperty Name="Companies" Relationship="Self.Company_Division" FromRole="UDC" ToRole="Company" />
+    <NavigationProperty Name="People" Relationship="Self.Person_Type" FromRole="UDC" ToRole="Person" />
+  </EntityType>
+  <Association Name="FK_City_State">
+    <End Role="State" Type="Self.State" Multiplicity="1" />
+    <End Role="City" Type="Self.City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateID" />
+      </Principal>
+      <Dependent Role="City">
+        <PropertyRef Name="StateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Location_City">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="Location" Type="Self.Location" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityID" />
+      </Principal>
+      <Dependent Role="Location">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Location_Country">
+    <End Role="Country" Type="Self.Country" Multiplicity="1" />
+    <End Role="Location" Type="Self.Location" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="Location">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_State_Country">
+    <End Role="Country" Type="Self.Country" Multiplicity="1" />
+    <End Role="State" Type="Self.State" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="State">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Location_State">
+    <End Role="State" Type="Self.State" Multiplicity="1" />
+    <End Role="Location" Type="Self.Location" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateID" />
+      </Principal>
+      <Dependent Role="Location">
+        <PropertyRef Name="StateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Location_UDC">
+    <End Role="UDC" Type="Self.UDC" Multiplicity="1" />
+    <End Role="Location" Type="Self.Location" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UDC">
+        <PropertyRef Name="UDCID" />
+      </Principal>
+      <Dependent Role="Location">
+        <PropertyRef Name="UDCID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Location_UDC1">
+    <End Role="UDC" Type="Self.UDC" Multiplicity="1" />
+    <End Role="Location" Type="Self.Location" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UDC">
+        <PropertyRef Name="UDCID" />
+      </Principal>
+      <Dependent Role="Location">
+        <PropertyRef Name="UDCID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Company_Division">
+    <End Role="Company" Type="Self.Company" Multiplicity="*" />
+    <End Role="UDC" Type="Self.UDC" Multiplicity="*" />
+  </Association>
+  <Association Name="Company_Location">
+    <End Role="Company" Type="Self.Company" Multiplicity="*" />
+    <End Role="Location" Type="Self.Location" Multiplicity="*" />
+  </Association>
+  <Association Name="Person_Location">
+    <End Role="Location" Type="Self.Location" Multiplicity="*" />
+    <End Role="Person" Type="Self.Person" Multiplicity="*" />
+  </Association>
+  <Association Name="Person_Type">
+    <End Role="Person" Type="Self.Person" Multiplicity="*" />
+    <End Role="UDC" Type="Self.UDC" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="CoreContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cities" EntityType="Self.City" />
+    <EntitySet Name="Companies" EntityType="Self.Company" />
+    <EntitySet Name="Countries" EntityType="Self.Country" />
+    <EntitySet Name="Locations" EntityType="Self.Location" />
+    <EntitySet Name="People" EntityType="Self.Person" />
+    <EntitySet Name="States" EntityType="Self.State" />
+    <EntitySet Name="UDCs" EntityType="Self.UDC" />
+    <AssociationSet Name="FK_City_State" Association="Self.FK_City_State">
+      <End Role="State" EntitySet="States" />
+      <End Role="City" EntitySet="Cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Location_City" Association="Self.FK_Location_City">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="Location" EntitySet="Locations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Location_Country" Association="Self.FK_Location_Country">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="Location" EntitySet="Locations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_State_Country" Association="Self.FK_State_Country">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="State" EntitySet="States" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Location_State" Association="Self.FK_Location_State">
+      <End Role="State" EntitySet="States" />
+      <End Role="Location" EntitySet="Locations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Location_UDC" Association="Self.FK_Location_UDC">
+      <End Role="UDC" EntitySet="UDCs" />
+      <End Role="Location" EntitySet="Locations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Location_UDC1" Association="Self.FK_Location_UDC1">
+      <End Role="UDC" EntitySet="UDCs" />
+      <End Role="Location" EntitySet="Locations" />
+    </AssociationSet>
+    <AssociationSet Name="Company_Division" Association="Self.Company_Division">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="UDC" EntitySet="UDCs" />
+    </AssociationSet>
+    <AssociationSet Name="Company_Location" Association="Self.Company_Location">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="Location" EntitySet="Locations" />
+    </AssociationSet>
+    <AssociationSet Name="Person_Location" Association="Self.Person_Location">
+      <End Role="Location" EntitySet="Locations" />
+      <End Role="Person" EntitySet="People" />
+    </AssociationSet>
+    <AssociationSet Name="Person_Type" Association="Self.Person_Type">
+      <End Role="Person" EntitySet="People" />
+      <End Role="UDC" EntitySet="UDCs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

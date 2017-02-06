@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CoreModelStoreContainer" CdmEntityContainer="CoreContext">
+    <EntitySetMapping Name="Cities">
+      <EntityTypeMapping TypeName="CoreModel.City">
+        <MappingFragment StoreEntitySet="City">
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="StateID" ColumnName="StateID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Companies">
+      <EntityTypeMapping TypeName="CoreModel.Company">
+        <MappingFragment StoreEntitySet="Company">
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DBA" ColumnName="DBA" />
+          <ScalarProperty Name="TaxNumber" ColumnName="TaxNumber" />
+          <ScalarProperty Name="EffectiveFrom" ColumnName="EffectiveFrom" />
+          <ScalarProperty Name="EffectiveTo" ColumnName="EffectiveTo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Countries">
+      <EntityTypeMapping TypeName="CoreModel.Country">
+        <MappingFragment StoreEntitySet="Country">
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Locations">
+      <EntityTypeMapping TypeName="CoreModel.Location">
+        <MappingFragment StoreEntitySet="Location">
+          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+          <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+          <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="StateID" ColumnName="StateID" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="UDCID" ColumnName="UDCID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="People">
+      <EntityTypeMapping TypeName="CoreModel.Person">
+        <MappingFragment StoreEntitySet="Person">
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="States">
+      <EntityTypeMapping TypeName="CoreModel.State">
+        <MappingFragment StoreEntitySet="State">
+          <ScalarProperty Name="StateID" ColumnName="StateID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UDCs">
+      <EntityTypeMapping TypeName="CoreModel.UDC">
+        <MappingFragment StoreEntitySet="UDC">
+          <ScalarProperty Name="UDCID" ColumnName="UDCID" />
+          <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+          <ScalarProperty Name="UserDefineCode" ColumnName="UserDefineCode" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="SpecialHandling" ColumnName="SpecialHandling" />
+          <ScalarProperty Name="HardCoded" ColumnName="HardCoded" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="Company_Division" TypeName="CoreModel.Company_Division" StoreEntitySet="Company_Division">
+      <EndProperty Name="Company">
+        <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+      </EndProperty>
+      <EndProperty Name="UDC">
+        <ScalarProperty Name="UDCID" ColumnName="UDCID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="Company_Location" TypeName="CoreModel.Company_Location" StoreEntitySet="Company_Location">
+      <EndProperty Name="Company">
+        <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+      </EndProperty>
+      <EndProperty Name="Location">
+        <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="Person_Location" TypeName="CoreModel.Person_Location" StoreEntitySet="Person_Location">
+      <EndProperty Name="Location">
+        <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+      </EndProperty>
+      <EndProperty Name="Person">
+        <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="Person_Type" TypeName="CoreModel.Person_Type" StoreEntitySet="Person_Type">
+      <EndProperty Name="Person">
+        <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+      </EndProperty>
+      <EndProperty Name="UDC">
+        <ScalarProperty Name="UDCID" ColumnName="UDCID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
