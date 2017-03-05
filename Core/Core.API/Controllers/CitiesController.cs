@@ -8,6 +8,7 @@ namespace Core.API.Controllers
     [RoutePrefix("api")]
     public class CitiesController : BaseApiController
     {
+    //changes made in master only
         public CitiesController(IRepository repoParam) : base(repoParam)
         {
         }
