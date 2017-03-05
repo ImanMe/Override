@@ -23,6 +23,7 @@ namespace Core.API.Controllers
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
+        //This is just to test my git demo
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
 
